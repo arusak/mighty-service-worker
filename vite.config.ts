@@ -5,6 +5,8 @@ import path from "path";
 import { readFileSync } from "fs";
 import tailwindcss from "tailwindcss";
 import autoprefixer from "autoprefixer";
+import {manifest} from "./config/manifest.config";
+import {workbox} from "./config/workbox.config";
 
 export default defineConfig(({ mode }) => {
   const { SSL_PRIVATE_KEY_PATH, SSL_PUBLIC_KEY_PATH } = loadEnv(
@@ -16,7 +18,10 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [
       vue(),
-      VitePWA({ registerType: "autoUpdate", devOptions: { enabled: true } }),
+      VitePWA({ registerType: "autoUpdate",
+        manifest,
+        workbox,
+        devOptions: { enabled: true } }),
     ],
     server: {
       port: 3000,
