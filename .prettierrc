@@ -1,0 +1,15 @@
+{
+  "arrowParens": "always",
+  "bracketSpacing": false,
+  "endOfLine": "lf",
+  "printWidth": 100,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "all",
+  "semi": false,
+  "vueIndentScriptAndStyle": true,
+  "plugins": [
+    "prettier-plugin-vue",
+    "prettier-plugin-tailwindcss"
+  ]
+}

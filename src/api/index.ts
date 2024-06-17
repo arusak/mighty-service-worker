@@ -1,6 +1,6 @@
-import api from './apiClient';
+import api from './apiClient'
 
-export default api;
+export default api
 
-export * from './.generated/models';
-export * from './.generated/runtime';
+export * from './.generated/models'
+export * from './.generated/runtime'

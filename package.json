@@ -8,7 +8,8 @@
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
     "generate:api:develop": "npx openapi-generator-cli generate --generator-key develop",
-    "lint": "npx oxlint --fix --ignore-path=src/api src"
+    "lint": "npx oxlint --fix --ignore-path=src/api src",
+    "prettier": "npx prettier src --write"
   },
   "dependencies": {
     "@types/node": "^20.14.2",
@@ -26,6 +27,8 @@
   },
   "devDependencies": {
     "oxlint": "^0.4.4",
-    "prettier": "^3.3.1"
+    "prettier": "^3.3.2",
+    "prettier-plugin-tailwindcss": "^0.6.4",
+    "prettier-plugin-vue": "^1.1.6"
   }
 }

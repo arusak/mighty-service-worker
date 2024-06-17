@@ -1,5 +1,5 @@
-<script setup lang="ts">
-import Notes from "./components/Notes.vue";
+<script lang="ts" setup>
+  import Notes from './components/Notes.vue'
 </script>
 
 <template>
