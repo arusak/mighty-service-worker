@@ -24,7 +24,8 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import api, { Note } from "../api";
+import notesService from "../services/NotesService";
+import { Note } from "../api";
 
 export default defineComponent({
   data() {
@@ -38,13 +39,7 @@ export default defineComponent({
   methods: {
     async fetchData() {
       try {
-        const response = await api.notes.getAllNotesRaw();
-
-        if (!response.raw.ok) {
-          throw new Error("Failed to fetch data");
-        }
-
-        this.dataList = await response.value();
+        this.dataList = await notesService.getAllNotes();
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -52,15 +47,7 @@ export default defineComponent({
 
     async addNote(noteText: string) {
       try {
-        const response = await api.notes.createNoteRaw({
-          createNoteRequest: { note: noteText },
-        });
-
-        if (!response.raw.ok) {
-          throw new Error("Failed to add note");
-        }
-
-        const newNote = await response.value();
+        const newNote = await notesService.createNote(noteText);
         this.dataList.push(newNote);
       } catch (error) {
         console.error("Error adding note:", error);
@@ -69,14 +56,11 @@ export default defineComponent({
 
     async deleteNote(id: string) {
       try {
-        const response = await api.notes.deleteNoteRaw({ id });
-
-        if (!response.raw.ok) {
-          throw new Error("Failed to delete note");
+        await notesService.deleteNote(id);
+        const idx = this.dataList.findIndex((n) => n.id === id);
+        if (idx !== -1) {
+          this.dataList.splice(idx, 1);
         }
-
-        let idx = this.dataList.findIndex((n) => n.id === id);
-        this.dataList.splice(idx, 1);
       } catch (error) {
         console.error("Error deleting note:", error);
       }
