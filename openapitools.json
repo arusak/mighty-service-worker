@@ -1,0 +1,18 @@
+{
+  "spaces": 2,
+  "generator-cli": {
+    "$schema": "node_modules/@openapitools/openapi-generator-cli/config.schema.json",
+    "version": "7.4.0",
+    "generators": {
+      "develop": {
+        "generatorName": "typescript-fetch",
+        "inputSpec": "server/openapi.yml",
+        "output": "./src/api/.generated",
+        "additionalProperties": {
+          "supportsES6": "true",
+          "stringEnums": "true"
+        }
+      }
+    }
+  }
+}

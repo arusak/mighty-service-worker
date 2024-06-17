@@ -24,11 +24,12 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import api, { Note } from "../api";
 
 export default defineComponent({
   data() {
     return {
-      dataList: [] as { id: string; note: string }[],
+      dataList: [] as Note[],
     };
   },
   mounted() {
@@ -37,19 +38,13 @@ export default defineComponent({
   methods: {
     async fetchData() {
       try {
-        const response = await fetch("https://localhost:8787/api/note", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await api.notes.getAllNotesRaw();
 
-        if (!response.ok) {
+        if (!response.raw.ok) {
           throw new Error("Failed to fetch data");
         }
 
-        const data = await response.json();
-        this.dataList = data;
+        this.dataList = await response.value();
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -57,21 +52,15 @@ export default defineComponent({
 
     async addNote(noteText: string) {
       try {
-        const response = await fetch("https://localhost:8787/api/note", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            note: noteText,
-          }),
+        const response = await api.notes.createNoteRaw({
+          createNoteRequest: { note: noteText },
         });
 
-        if (!response.ok) {
+        if (!response.raw.ok) {
           throw new Error("Failed to add note");
         }
 
-        const newNote = await response.json();
+        const newNote = await response.value();
         this.dataList.push(newNote);
       } catch (error) {
         console.error("Error adding note:", error);
@@ -80,11 +69,9 @@ export default defineComponent({
 
     async deleteNote(id: string) {
       try {
-        const response = await fetch(`https://localhost:8787/api/note/${id}`, {
-          method: "DELETE",
-        });
+        const response = await api.notes.deleteNoteRaw({ id });
 
-        if (!response.ok) {
+        if (!response.raw.ok) {
           throw new Error("Failed to delete note");
         }
 

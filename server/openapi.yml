@@ -1,0 +1,158 @@
+openapi: 3.0.3
+info:
+  title: Notes API
+  version: 1.0.0
+  description: API for managing notes
+paths:
+  /api/note:
+    post:
+      tags:
+        - notes
+      summary: Create a note
+      operationId: createNote
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                note:
+                  type: string
+              required:
+                - note
+      responses:
+        '201':
+          description: Note created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+        '400':
+          description: Note is required
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+    get:
+      tags:
+        - notes
+      summary: Get all notes
+      operationId: getAllNotes
+      responses:
+        '200':
+          description: List of notes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Note'
+
+
+  /api/note/{id}:
+    put:
+      tags:
+        - notes
+      summary: Update a note
+      operationId: updateNote
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                note:
+                  type: string
+              required:
+                - note
+      responses:
+        '200':
+          description: Note updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  note:
+                    $ref: '#/components/schemas/Note'
+        '400':
+          description: Note is required
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Note not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+    delete:
+      tags:
+        - notes
+      summary: Soft-delete a note
+      operationId: deleteNote
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Note deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  note:
+                    $ref: '#/components/schemas/Note'
+
+        '404':
+          description: Note not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+components:
+  schemas:
+    Note:
+      type: object
+      properties:
+        id:
+          type: string
+        note:
+          type: string
+        deleted:
+          type: boolean
+      required:
+        - id
+        - note

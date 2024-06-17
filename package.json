@@ -6,14 +6,12 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate:api:develop": "npx openapi-generator-cli generate --generator-key develop",
+    "lint": "npx oxlint --fix --ignore-path=src/api src"
   },
   "dependencies": {
     "@types/node": "^20.14.2",
-    "prettier": "^3.3.1",
-    "vue": "^3.4.21"
-  },
-  "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.38",
@@ -21,6 +19,11 @@
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
     "vite-plugin-pwa": "^0.20.0",
+    "vue": "^3.4.21",
     "vue-tsc": "^2.0.6"
+  },
+  "devDependencies": {
+    "oxlint": "^0.4.4",
+    "prettier": "^3.3.1"
   }
 }
